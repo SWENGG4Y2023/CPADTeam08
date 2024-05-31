@@ -1,8 +1,9 @@
 import { useState } from "react";
 import { Button, Image, View, StyleSheet } from "react-native";
 import * as ImagePicker from "expo-image-picker";
+import CustomButton from "./CustomButton";
 
-export default function PickImage({ image, setImage }) {
+export default function PickImage({ image, setImage, disabled, setData }) {
   const pickImage = async () => {
     // No permissions request is necessary for launching the image library
 
@@ -18,30 +19,33 @@ export default function PickImage({ image, setImage }) {
     // console.log(result);
 
     if (!result.canceled) {
+      setData("");
       setImage(result.assets[0].uri);
     }
   };
 
   return (
-    <View>
-      <Button title="Pick" onPress={pickImage} style={styles.button} />
+    <View style={styles.container}>
+      <CustomButton
+        title="Pick"
+        onPress={pickImage}
+        color={disabled ? "grey" : "tomato"}
+        style={styles.button}
+        disabled={disabled}
+      />
       {image && <Image source={{ uri: image }} style={styles.image} />}
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
-  },
   image: {
-    width: 200,
-    height: 200,
+    width: 250,
+    height: 250,
   },
-  button: {
-    backgroundColor: "tomato",
-    color: "white",
+  container: {
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
   },
 });

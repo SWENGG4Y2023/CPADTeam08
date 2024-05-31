@@ -1,4 +1,4 @@
-import React from "react";
+import React, { act } from "react";
 
 import {
   StyleSheet,
@@ -7,6 +7,9 @@ import {
   SafeAreaView,
   Platform,
   TextInput,
+  ScrollView,
+  ActivityIndicator,
+  KeyboardAvoidingView,
 } from "react-native";
 import PickImage from "./PickImage";
 import { useState, useEffect } from "react";
@@ -15,39 +18,65 @@ import run from "../utilities/gemini/api";
 
 function Body() {
   const [data, setData] = useState("Result will be displayed here."); // For showing result
-  const [value, onChangeText] = useState("Useless Placeholder"); // For taking input
+  const [value, onChangeText] = useState(null); // For taking input
   const [image, setImage] = useState(null);
-
-  useEffect(() => {
-    console.log("image updated:");
-    // console.log(image);
-  }, [image]);
+  const [btnState, setBtnState] = useState("Ask");
 
   const askai = async function () {
-    console.log(image);
-    console.log(value);
+    setBtnState("Asking...");
     setData(await run(image, value));
+    setBtnState("Ask");
+    console.log(data);
   };
 
   return (
-    <SafeAreaView style={styles.container}>
-      <PickImage setImage={setImage} image={image} />
-      {/* <PickImage setImage={setImage} image={image} /> */}
-      <Text> {data} </Text>
-      <View style={styles.innerContainer}>
-        <TextInput
-          editable
-          multiline
-          numberOfLines={4}
-          maxLength={200}
-          onChangeText={(text) => onChangeText(text)}
-          value={value}
-          style={styles.textedit}
-        />
-        <Button style={styles.button} mode="elevated" onPress={askai}>
-          <Text style={{ color: "white" }}>Ask</Text>
-        </Button>
-      </View>
+    <SafeAreaView
+      style={{
+        backgroundColor: "black",
+        display: "flex",
+        width: "100%",
+        height: "100%",
+      }}
+    >
+      <KeyboardAvoidingView behavior="padding" keyboardVerticalOffset={100}>
+        <View
+          style={{
+            backgroundColor: "blue",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          <PickImage setImage={setImage} image={image} />
+          <View>
+            <ScrollView>
+              <Text> {data} </Text>
+            </ScrollView>
+
+            <TextInput
+              placeholder="Ask me anything..."
+              editable
+              multiline
+              numberOfLines={4}
+              maxLength={200}
+              onChangeText={(text) => onChangeText(text)}
+              value={value}
+            />
+            <Button
+              style={
+                image == null || value == null
+                  ? styles.disabled_button
+                  : styles.button
+              }
+              mode="elevated"
+              onPress={askai}
+              disabled={image == null || value == null}
+            >
+              <Text style={{ color: "white" }}>{btnState}</Text>
+            </Button>
+          </View>
+        </View>
+      </KeyboardAvoidingView>
     </SafeAreaView>
   );
 }
@@ -58,12 +87,23 @@ const styles = StyleSheet.create({
     padding: 20,
     justifyContent: "space-between",
     alignItems: "center",
+    backgroundColor: "green",
   },
   innerContainer: {
     flexDirection: "coloumn",
     alignItems: "center",
     justifyContent: "space-between",
     width: "100%",
+    backgroundColor: "red",
+    flex: 1,
+  },
+  outerContainer: {
+    flexDirection: "coloumn",
+    alignItems: "center",
+    justifyContent: "space-between",
+    width: "100%",
+    backgroundColor: "black",
+    flex: 0.5,
   },
   textedit: {
     width: Platform.OS === "web" ? "50%" : "90%",
@@ -79,5 +119,25 @@ const styles = StyleSheet.create({
     backgroundColor: "tomato",
     margin: 4,
   },
+  disabled_button: {
+    width: Platform.OS === "web" ? "10%" : "25%",
+    backgroundColor: "grey",
+    margin: 4,
+  },
+  result: {
+    padding: 10,
+  },
+  activityIndicator: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    height: 80,
+  },
+  pickimage: {
+    display: "flex",
+    justifyContent: "center",
+    alignContent: "center",
+  },
 });
+
 export default Body;
