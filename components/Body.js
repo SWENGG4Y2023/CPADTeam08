@@ -1,4 +1,5 @@
 import React from "react";
+
 import {
   StyleSheet,
   Text,
@@ -8,17 +9,30 @@ import {
   TextInput,
 } from "react-native";
 import PickImage from "./PickImage";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "react-native-paper";
+import run from "../utilities/gemini/api";
 
 function Body() {
-  const [data, setData] = useState("Result will be displayed here.");
-  const [value, onChangeText] = useState("Useless Placeholder");
+  const [data, setData] = useState("Result will be displayed here."); // For showing result
+  const [value, onChangeText] = useState("Useless Placeholder"); // For taking input
+  const [image, setImage] = useState(null);
+
+  useEffect(() => {
+    console.log("image updated:");
+    // console.log(image);
+  }, [image]);
+
+  const askai = async function () {
+    console.log(image);
+    console.log(value);
+    setData(await run(image, value));
+  };
 
   return (
     <SafeAreaView style={styles.container}>
-      {/* <View style={Styles.container}> */}
-      <PickImage />
+      <PickImage setImage={setImage} image={image} />
+      {/* <PickImage setImage={setImage} image={image} /> */}
       <Text> {data} </Text>
       <View style={styles.innerContainer}>
         <TextInput
@@ -30,46 +44,13 @@ function Body() {
           value={value}
           style={styles.textedit}
         />
-        <Button
-          style={styles.button}
-          mode="elevated"
-          onPress={() => setData("This is the result.")}
-        >
+        <Button style={styles.button} mode="elevated" onPress={askai}>
           <Text style={{ color: "white" }}>Ask</Text>
         </Button>
       </View>
-      {/* </View> */}
     </SafeAreaView>
   );
 }
-
-// const Styles = StyleSheet.create({
-//   container: {
-//     margin: "1rem",
-//     flex: 1,
-//     // backgroundColor: "black",
-//     flexDirection: "column", // inner items will be added vertically
-//     justifyContent: "space-between", // will create the gutter between body and footer
-//     gap: "8rem", // will create the gutter between body and footer
-//     alignItems: "center", // will align the items in the center
-//   },
-//   button: {
-//     width: Platform.OS === "web" ? "100%" : "50%",
-//     backgroundColor: "tomato",
-//     margin: 4,
-//   },
-//   textedit: {
-//     width: Platform.OS === "web" ? "100%" : "100%",
-//     borderColor: "tomato",
-//     borderWidth: 1,
-//     padding: 8,
-//     margin: "1rem",
-//     borderRadius: 50,
-//     textAlign: "center",
-//     padding: 10,
-//     editable: true,
-//   },
-// });
 
 const styles = StyleSheet.create({
   container: {
@@ -79,7 +60,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   innerContainer: {
-    // flex: 1,
     flexDirection: "coloumn",
     alignItems: "center",
     justifyContent: "space-between",
