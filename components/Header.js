@@ -8,11 +8,12 @@ import {
 import PickImage from "./PickImage";
 
 function Header() {
+  const TITLE = "DepictionAI";
   return (
     <View>
       <StatusBar color="green" barStyle="light-content" />
       <Appbar.Header style={styles.appbar}>
-        <Appbar.Content title="AI" titleStyle={styles.title} />
+        <Appbar.Content title={TITLE} titleStyle={styles.title} />
       </Appbar.Header>
     </View>
   );

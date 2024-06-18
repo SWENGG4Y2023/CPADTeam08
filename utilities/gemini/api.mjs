@@ -48,5 +48,17 @@ export default async function run(image, prompt) {
   const response = await result.response;
   const text = response.text();
   console.log(text);
+  test();
   return text;
+}
+
+export async function test() {
+  const url = "http://localhost:3000";
+
+  const data = await fetch(url);
+  const jsonData = await data.json();
+  console.log(jsonData);
+
+  // .then((response) => response.json())
+  // .then((jsonData) => console.log(jsonData));
 }

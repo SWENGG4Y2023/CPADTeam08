@@ -14,7 +14,7 @@ import {
 import PickImage from "./PickImage";
 import { useState, useEffect } from "react";
 import { Button } from "react-native-paper";
-import run from "../utilities/gemini/api";
+import run from "../utilities/gemini/api.mjs";
 
 function Body() {
   const [data, setData] = useState("Result will be displayed here."); // For showing result
