@@ -1,7 +1,7 @@
 import { GoogleGenerativeAI } from "@google/generative-ai";
 import * as FileSystem from "expo-file-system";
 
-const API_KEY = "AIzaSyAr1IY-P-ABIXif40gU5Ld7uDQLU5Wm87g";
+const API_KEY = "############";
 
 const genAI = new GoogleGenerativeAI(API_KEY);
 
