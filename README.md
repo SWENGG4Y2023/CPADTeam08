@@ -4,6 +4,7 @@
 - **Abhishek Mondal** (Roll: 2021HS70019)
 - **Sheetal Raj** (Roll: 2021HS70018)
 - **Anuj Arora** (Roll: 2021HS70037)
+- **Akash Chowdhury** (Roll: 2021HS70012)
 
 ---
 
