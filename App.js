@@ -10,7 +10,6 @@ export default function App() {
     <SafeAreaProvider>
       <View style={styles.container}>
         <Header style={{ backgroundColor: "#000" }} />
-        {/* <Body /> */}
         <Body2></Body2>
 
         <StatusBar style="auto" />
