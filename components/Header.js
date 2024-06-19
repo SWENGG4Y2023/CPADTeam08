@@ -8,7 +8,7 @@ import {
 import PickImage from "./PickImage";
 
 function Header() {
-  const TITLE = "DepictionAI";
+  const TITLE = "AIGotEYE:))";
   return (
     <View>
       <StatusBar color="green" barStyle="light-content" />
@@ -18,5 +18,21 @@ function Header() {
     </View>
   );
 }
+
+// styling the header
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+  appbar: {
+    // setting the bg color
+    backgroundColor: "tomato",
+  },
+  // setting the title color as white
+  title: {
+    color: "white",
+  },
+});
+
 
 export default Header;
