@@ -19,16 +19,4 @@ function Header() {
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-  appbar: {
-    backgroundColor: "tomato",
-  },
-  title: {
-    color: "white",
-  },
-});
-
 export default Header;
